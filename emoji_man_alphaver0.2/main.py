@@ -12,6 +12,8 @@ from gamemap import *
 
 from tiles import Tile1
 
+from scores import Score
+
 # calls the init method to init the modules 
 pygame.init()
 
@@ -32,6 +34,8 @@ player = pygame.sprite.Group()
 enemy_1 = EmojiEnemy(start_x= 1600, start_y= 800, steps= 450)
 enemy_2 = EmojiEnemy(start_x= 1040, start_y= 496, steps= 150)
 enemies.add(enemy_1, enemy_2)
+
+score = Score()
 
 player_1 = EmojiMan()
 player.add(player_1)
@@ -75,6 +79,9 @@ while running:
 
     enemies.update()
     #print(enemies)
+
+    score.current_time()
+    score.update()
     
     #level.draw_map(sprites)
     collide = pygame.Rect.colliderect(player_1.rect, enemy_1.rect)
