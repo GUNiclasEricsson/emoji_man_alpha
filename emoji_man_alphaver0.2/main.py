@@ -18,12 +18,12 @@ from scores import Score
 pygame.init()
 
 # the running variable takes the boolean true to be able to use in the while-loop
-running = True
+running = False
 
 
 # creates an instance of the Clock class for keeping the framerate
 
-clock = pygame.time.Clock() 
+clock = pygame.time.Clock()
 
 
 sprites = pygame.sprite.Group()
@@ -60,45 +60,66 @@ level.draw_map(sprites)
 
 
 # while run the main game loop as long as the value is True
-while running: 
+while True: 
     # goes trough each event in the .get method from the .event module 
     # they are stored as a (object)?
     for event in pygame.event.get():
         #print(event)
         # checks if the type of event is a key being pressed
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
         if event.type == pygame.KEYDOWN:
             if event.key == ESC:
                 running = False
 
-    SCREEN.blit(BACKGROUND, (0, 0))
-
-
-    key = pygame.key.get_pressed()
-    player.update(key)
-    player_1.apply_gravity()
-
-    enemies.update()
-    #print(enemies)
-
-    score.current_time()
-    score.update()
     
-    #level.draw_map(sprites)
-    collide = pygame.Rect.colliderect(player_1.rect, enemy_1.rect)
-    print(collide)
+    if running:
 
-    if collide:
-        print("DIE!", player_1.rect, enemy_1.rect)
+        SCREEN.blit(BACKGROUND, (0, 0))
 
-    for sprite in sprites:
-        #print(sprite.surface, sprite.rect)
-        SCREEN.blit(sprite.surface, sprite.rect)
+        score.update()
 
-    #sprites.draw(SCREEN)
-    #for player in player.sprites():
-    #    print(player.rect)
-    #    for enemy in enemies.sprites():
-    #        print(enemy.rect)
+
+        key = pygame.key.get_pressed()
+        player.update(key)
+        player_1.apply_gravity()
+
+        enemies.update()
+        #print(enemies)
+
+
+    
+        #level.draw_map(sprites)
+        collide = pygame.Rect.colliderect(player_1.rect, enemy_1.rect)
+        print(collide)
+
+        if collide:
+            print("DIE!", player_1.rect, enemy_1.rect)
+
+        for sprite in sprites:
+            #print(sprite.surface, sprite.rect)
+            SCREEN.blit(sprite.surface, sprite.rect)
+
+        #sprites.draw(SCREEN)
+        #for player in player.sprites():
+        #    print(player.rect)
+        #    for enemy in enemies.sprites():
+        #        print(enemy.rect)
+
+    # Start screen / Game over screen
+    else:
+        score.game_over()      
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RETURN:
+                score.score_reset()
+                running = True
+                
+
+
+
+
+
 
 
 

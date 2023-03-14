@@ -2,6 +2,7 @@ import pygame
 
 WH = (1920, 1080)
 PLAYER_START = (300, 500)
+#FRUIT_1_START = (200, 500)
 RECT_SIZE = 40
 FPS = 60
 # create an instance/object for the screen to draw on, 
